@@ -4,7 +4,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-DEEPSEEK_API_KEY = 'sk-5fc4a1781e0e407ea2fe01d4640c5d21'
+DEEPSEEK_API_KEY = 'sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions'
 
 DEEPSEEK_SYSTEM_PROMPT = '''你是手语语言学专家和现代汉语词性标注专家。
