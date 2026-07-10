@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>学习 - 手语星球</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --page:#f9f7f4;
+  --card:#ffffff;
+  --card-edge:rgba(0,0,0,0.06);
+  --text:#1a1720;
+  --text-secondary:#6c6878;
+  --text-muted:#a39daa;
+  --blue:#4f85e6;
+  --blue-soft:#eff3fc;
+  --blue-ring:#d0daf6;
+  --green:#3b9e72;
+  --green-soft:#ecf7f1;
+  --amber:#c89030;
+  --amber-bg:#fdf6e8;
+  --radius:12px;
+}
+body{
+  font-family:"Inter","Noto Sans SC",-apple-system,sans-serif;
+  background:var(--page);
+  color:var(--text);
+  min-height:100vh;font-size:14px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+/* Background pattern */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;
+  background-image:radial-gradient(rgba(79,133,230,0.04) 1px,transparent 1px);
+  background-size:32px 32px;
+  pointer-events:none;
+}
+
+/* ── nav ── */
+.nav-bar{
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);
+  z-index:100;width:calc(100% - 36px);max-width:1060px;
+}
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 18px;
+  background:rgba(255,255,255,0.82);backdrop-filter:blur(20px);
+  border:1px solid rgba(0,0,0,0.06);border-radius:40px;
+  box-shadow:0 1px 0 rgba(0,0,0,0.04),0 4px 20px rgba(0,0,0,0.03);
+}
+.nav-home{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:var(--text);text-decoration:none}
+.nav-home .dot{width:22px;height:22px;border-radius:6px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
+.nav-home .sub{color:var(--text-muted);font-weight:400;margin-left:2px}
+.nav-links{display:flex;gap:2px}
+.nav-links a{
+  display:flex;align-items:center;gap:5px;padding:6px 13px;border-radius:20px;
+  font-size:12px;font-weight:500;color:var(--text-secondary);text-decoration:none;
+  transition:all 0.2s;
+}
+.nav-links a:hover{color:var(--text);background:rgba(0,0,0,0.03)}
+.nav-links a.active{color:var(--blue);background:var(--blue-soft)}
+.nav-links a svg{width:13px;height:13px;opacity:0.55}
+.nav-right{display:flex;align-items:center;gap:8px;position:relative}
+.nav-right .usr-btn{
+  width:30px;height:30px;border:none;border-radius:50%;
+  background:rgba(0,0,0,0.04);color:var(--text-secondary);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.nav-right .usr-btn:hover{background:rgba(0,0,0,0.07);color:var(--text)}
+.nav-right .usr-btn svg{width:15px;height:15px}
+
+/* ── auth dropdown ── */
+.auth-panel{
+  position:absolute;top:calc(100% + 9px);right:0;width:260px;
+  background:var(--card);border:1px solid var(--card-edge);border-radius:14px;padding:20px;
+  opacity:0;visibility:hidden;transform:translateY(-4px);
+  transition:all 0.2s ease;box-shadow:0 16px 48px rgba(0,0,0,0.12);z-index:200;
+}
+.auth-panel.open{opacity:1;visibility:visible;transform:translateY(0)}
+.auth-panel .tabs{display:flex;gap:4px;background:#f5f4f2;border-radius:8px;padding:3px;margin-bottom:14px}
+.auth-panel .tab{flex:1;padding:7px;border:none;border-radius:6px;background:transparent;color:var(--text-muted);font-size:12px;font-weight:500;cursor:pointer}
+.auth-panel .tab.active{background:#fff;color:var(--blue);box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.auth-panel .fg{margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.auth-panel .fg label{display:flex;align-items:center;flex-shrink:0;color:var(--text-muted);width:16px}
+.auth-panel .fg label svg{width:13px;height:13px}
+.auth-panel .fi{flex:1;padding:8px 11px;border:1px solid var(--card-edge);border-radius:7px;background:#fafaf8;color:var(--text);font-size:13px;outline:none}
+.auth-panel .fi:focus{border-color:var(--blue);background:#fff}
+.auth-panel .btn{width:100%;padding:9px;border:none;border-radius:7px;background:var(--blue);color:#fff;font-size:12px;font-weight:500;cursor:pointer;margin-top:4px}
+.auth-panel .btn:hover{opacity:0.9}
+.auth-panel .ae{color:#e33;font-size:12px;padding:6px;background:#fef2f2;border-radius:6px;margin-bottom:8px;display:none}
+.auth-panel .user-row{display:flex;align-items:center;gap:10px;padding:4px 0}
+.auth-panel .user-row .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#6da0f2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px}
+.auth-panel .user-row .detail .name{font-weight:600;font-size:13px}
+.auth-panel .user-row .detail .meta{font-size:11px;color:var(--text-muted)}
+.auth-panel .signout{width:100%;padding:9px;border:1px solid var(--card-edge);border-radius:7px;background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;margin-top:10px}
+.auth-panel .signout:hover{color:#e33;border-color:rgba(238,51,51,0.15)}
+
+/* ── page ── */
+.page{padding:76px 24px 52px;max-width:1060px;margin:0 auto}
+
+/* ── hero card ── */
+.top-row{display:flex;gap:14px;margin-bottom:28px;flex-wrap:wrap}
+.hero-card{flex:2;background:var(--card);border:1px solid var(--card-edge);border-radius:var(--radius);padding:24px 28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+.hero-card .welcome{display:flex;align-items:center;gap:14px;flex:1;min-width:200px}
+.hero-card .welcome .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#e8e6ff,#d4d0ff);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.hero-card .welcome .txt h2{font-size:17px;font-weight:700;margin-bottom:2px}
+.hero-card .welcome .txt p{font-size:12px;color:var(--text-secondary)}
+.hero-card .ring-stat{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.hero-card .ring-stat svg{display:block}
+.hero-card .ring-stat .ring-num{font-size:28px;font-weight:800;color:var(--blue)}
+.hero-card .ring-stat .ring-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px}
+.stats-trio{flex:3;display:flex;gap:12px;flex-wrap:wrap}
+.stat-tile{flex:1;min-width:150px;background:var(--card);border:1px solid var(--card-edge);border-radius:var(--radius);padding:16px 18px;display:flex;align-items:center;gap:12px}
+.stat-tile .tile-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-tile:nth-child(1) .tile-icon{background:var(--blue-soft);color:var(--blue)}
+.stat-tile:nth-child(2) .tile-icon{background:var(--amber-bg);color:var(--amber)}
+.stat-tile:nth-child(3) .tile-icon{background:var(--green-soft);color:var(--green)}
+.stat-tile .tile-icon svg{width:18px;height:18px}
+.stat-tile .tile-body .tile-val{font-size:22px;font-weight:700;color:var(--text);line-height:1.2}
+.stat-tile .tile-body .tile-sub{font-size:11px;color:var(--text-muted);margin-top:2px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-head h2{font-size:16px;font-weight:700}
+.section-head .tags{display:flex;gap:6px}
+.section-head .tags span{font-size:11px;color:var(--text-muted);padding:4px 12px;background:rgba(0,0,0,0.03);border-radius:20px}
+
+/* ── stage grid ── */
+.stage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:12px}
+.stage{
+  background:var(--card);border:1px solid var(--card-edge);
+  border-radius:var(--radius);padding:18px 20px;
+  transition:box-shadow 0.2s,border-color 0.2s;
+  display:flex;flex-direction:column;
+}
+.stage:hover{box-shadow:0 4px 20px rgba(0,0,0,0.06);border-color:rgba(79,133,230,0.15)}
+.stage.locked{opacity:0.45;pointer-events:none}
+.stage.locked:hover{box-shadow:none;border-color:var(--card-edge)}
+.stage .top-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
+.stage .top-row .name{font-size:14px;font-weight:700;color:var(--text)}
+.stage .top-row .ico{font-size:22px}
+.stage .desc{font-size:11px;color:var(--text-secondary);margin-bottom:8px;line-height:1.5}
+.stage .word-count{font-size:11px;color:var(--text-muted);margin-bottom:10px}
+.stage .bar-wrap{height:3px;background:#f0efe9;border-radius:2px;overflow:hidden;margin-bottom:8px}
+.stage .bar-wrap .bar-fill{height:100%;background:var(--blue);border-radius:2px;transition:width 0.6s ease}
+.stage.completed .bar-wrap .bar-fill{background:var(--green)}
+.stage .stars-row{font-size:13px;margin-bottom:10px;letter-spacing:1.5px;color:#d8d4c8}
+.stage .stars-row .star-lit{color:var(--amber)}
+.stage .enter-link{
+  display:block;padding:7px 0;border-radius:7px;
+  font-size:12px;font-weight:600;text-align:center;text-decoration:none;
+  background:var(--blue);color:#fff;transition:opacity 0.2s;
+}
+.stage .enter-link:hover{opacity:0.85}
+.stage .enter-link-disabled{
+  display:block;padding:7px 0;border-radius:7px;
+  font-size:12px;font-weight:500;text-align:center;
+  background:#f4f3f0;color:var(--text-muted);
+}
+.stage .best-score{font-size:10px;color:var(--text-muted);text-align:center;margin-top:6px}
+
+.empty-placeholder{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-muted)}
+.empty-placeholder svg{width:40px;height:40px;opacity:0.12;margin-bottom:8px}
+.empty-placeholder p{font-size:13px}
+
+@media(max-width:768px){
+  .page{padding:70px 14px 36px}
+  .nav-bar{width:calc(100% - 16px);top:12px}
+  .nav{padding:7px 12px;border-radius:24px}
+  .nav-links a{padding:5px 9px;font-size:11px}.nav-links a span{display:none}
+  .top-row{flex-direction:column}
+  .hero-card{flex-direction:column;text-align:center}
+  .hero-card .welcome{flex-direction:column}
+  .stats-trio{flex-direction:column}
+  .stage-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+<nav class="nav">
+<a href="/" class="nav-home"><div class="dot">🤟</div>手语星球<span class="sub">Sign</span></a>
+<div class="nav-links">
+<a href="/"><svg data-lucide="home" width="13" height="13"></svg><span>首页</span></a>
+<a href="/learn" class="active"><svg data-lucide="book-open" width="13" height="13"></svg><span>学习</span></a>
+<a href="/camera-game"><svg data-lucide="camera" width="13" height="13"></svg><span>AI手势镜</span></a>
+<a href="/game"><svg data-lucide="gamepad-2" width="13" height="13"></svg><span>游戏</span></a>
+<a href="/learning"><svg data-lucide="library" width="13" height="13"></svg><span>词库</span></a>
+<a href="/learn/review"><svg data-lucide="refresh-cw" width="13" height="13"></svg><span>复习</span></a>
+</div>
+<div class="nav-right">
+<button class="usr-btn" id="authToggleBtn"><svg data-lucide="user" width="15" height="15"></svg></button>
+<div class="auth-panel" id="authDrop">
+<div id="authNotLoggedIn">
+<div class="tabs"><button class="tab active" data-tab="login">登录</button><button class="tab" data-tab="register">注册</button></div>
+<div class="ae" id="authError"></div>
+<div class="fg"><label><svg data-lucide="user" width="13" height="13"></svg></label><input type="text" id="authUsername" class="fi" placeholder="用户名" maxlength="20"></div>
+<div class="fg"><label><svg data-lucide="lock" width="13" height="13"></svg></label><input type="password" id="authPassword" class="fi" placeholder="密码"></div>
+<div class="fg" id="confirmGroup" style="display:none"><label><svg data-lucide="shield" width="13" height="13"></svg></label><input type="password" id="authConfirm" class="fi" placeholder="确认密码"></div>
+<button class="btn" id="authSubmitBtn">登录</button>
+</div>
+<div id="authLoggedIn" style="display:none">
+<div class="user-row"><div class="avatar">🤟</div><div class="detail"><div class="name" id="userName">用户</div><div class="meta" id="userMeta">Lv.1 · 0 XP</div></div></div>
+<button class="signout" id="logoutBtn">退出</button>
+</div>
+</div>
+</div>
+</nav>
+</div>
+
+<div class="page">
+
+<div class="top-row">
+<div class="hero-card">
+<div class="welcome">
+<div class="av" id="heroAv">🤟</div>
+<div class="txt">
+<h2 id="heroTitle">你好，请登录</h2>
+<p id="heroSub">登录后追踪学习进度与成就</p>
+</div>
+</div>
+<div class="ring-stat">
+<svg width="54" height="54" viewBox="0 0 60 60" style="transform:rotate(-90deg)">
+<circle cx="30" cy="30" r="25" fill="none" stroke="#ebe8e2" stroke-width="3"/>
+<circle cx="30" cy="30" r="25" fill="none" stroke="var(--blue)" stroke-width="3" stroke-linecap="round" stroke-dasharray="0,999" id="heroRing"/>
+</svg>
+<div>
+<div class="ring-num" id="heroPct">0%</div>
+<div class="ring-label">完成度</div>
+</div>
+</div>
+</div>
+<div class="stats-trio">
+<div class="stat-tile"><div class="tile-icon"><svg data-lucide="zap" width="18" height="18"></svg></div><div class="tile-body"><div class="tile-val" id="xpVal">-</div><div class="tile-sub">经验值 · Lv.<span id="lvlVal">-</span></div></div></div>
+<div class="stat-tile"><div class="tile-icon"><svg data-lucide="flame" width="18" height="18"></svg></div><div class="tile-body"><div class="tile-val" id="strVal">-</div><div class="tile-sub">连击 · 最佳 <span id="bestStrVal">-</span></div></div></div>
+<div class="stat-tile"><div class="tile-icon"><svg data-lucide="trophy" width="18" height="18"></svg></div><div class="tile-body"><div class="tile-val" id="scoreVal">-</div><div class="tile-sub">得分 · 正确率 <span id="accVal">-</span></div></div></div>
+</div>
+</div>
+
+<div class="section-head"><h2>学习地图</h2><div class="tags"><span id="pillStages">登录后查看</span></div></div>
+
+<div class="stage-grid" id="stageGrid"><div class="empty-placeholder"><svg data-lucide="book-open" width="40" height="40"></svg><p>登录后查看学习地图</p></div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="/static/js/auth.js"></script>
+<script>
+var BASE="",authOpen=false,authTab="login",cu=null;
+lucide.createIcons();
+document.querySelectorAll(".tab").forEach(function(t){t.addEventListener("click",function(){document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("active")});t.classList.add("active");authTab=t.dataset.tab;document.getElementById("authSubmitBtn").textContent=authTab==="register"?"注册":"登录";document.getElementById("confirmGroup").style.display=authTab==="register"?"flex":"none";document.getElementById("authError").style.display="none";});});
+document.getElementById("authToggleBtn").addEventListener("click",function(e){e.stopPropagation();authOpen=!authOpen;document.getElementById("authDrop").classList.toggle("open",authOpen)});
+document.addEventListener("click",function(e){var d=document.getElementById("authDrop");if(authOpen&&!d.contains(e.target)&&e.target!==document.getElementById("authToggleBtn")){authOpen=false;d.classList.remove("open")}});
+document.getElementById("authSubmitBtn").addEventListener("click",async function(){var u=document.getElementById("authUsername").value.trim(),p=document.getElementById("authPassword").value,e=document.getElementById("authError"),r;if(authTab==="register"){var c=document.getElementById("authConfirm").value;if(p!==c){e.textContent="两次密码不一致";e.style.display="block";return}r=await Auth.register(u,p,c)}else{r=await Auth.login(u,p)}if(r.error){e.textContent=r.error;e.style.display="block";return}authOpen=false;document.getElementById("authDrop").classList.remove("open");onAuth(r.user)});
+document.getElementById("logoutBtn").addEventListener("click",async function(){await Auth.logout();document.getElementById("authLoggedIn").style.display="none";document.getElementById("authNotLoggedIn").style.display="block"});
+function onAuth(u){document.getElementById("authNotLoggedIn").style.display="none";document.getElementById("authLoggedIn").style.display="block";document.getElementById("userName").textContent=u.username;document.getElementById("userMeta").textContent="Lv."+(u.level||1)+" · "+(u.xp||0)+" XP";cu=u;renderUser(u);loadStages()}
+document.addEventListener("auth:login",function(e){cu=e.detail;onAuth(e.detail)});
+document.addEventListener("auth:logout",function(){cu=null;resetPage()});
+Auth.ready().then(function(){if(Auth.isLoggedIn()){cu=Auth.getUser();onAuth(cu)}});
+function renderUser(u){if(!u)return;document.getElementById("heroTitle").textContent="你好，"+u.username;document.getElementById("heroSub").textContent="Lv."+(u.level||1)+" · "+(u.xp||0)+" XP · 继续前行";document.getElementById("xpVal").textContent=u.xp||0;document.getElementById("lvlVal").textContent=u.level||1;document.getElementById("strVal").textContent=u.streak||0;document.getElementById("bestStrVal").textContent=u.best_streak||0;document.getElementById("scoreVal").textContent=u.total_score||0;var t=(u.correct_count||0)+(u.wrong_count||0);document.getElementById("accVal").textContent=(t>0?Math.round((u.correct_count||0)/t*100):0)+"%"}
+function resetPage(){
+["xpVal","lvlVal","strVal","bestStrVal","scoreVal"].forEach(function(id){document.getElementById(id).textContent="-"});document.getElementById("accVal").textContent="-";document.getElementById("heroTitle").textContent="你好，请登录";document.getElementById("heroSub").textContent="登录后追踪学习进度与成就";document.getElementById("heroPct").textContent="0%";document.getElementById("pillStages").textContent="登录后查看";document.getElementById("stageGrid").innerHTML='<div class="empty-placeholder"><svg data-lucide="book-open" width="40" height="40"></svg><p>登录后查看学习地图</p></div>';lucide.createIcons()
+}
+async function loadStages(){if(!cu)return;try{var r=await fetch(BASE+"/api/learn/stages?user_id="+cu.id);var d=await r.json();if(d.code!==0)return;var s=d.data;var pct=s.total_words>0?Math.round(s.learned_words/s.total_words*100):0;document.getElementById("heroPct").textContent=pct+"%";var circum=2*Math.PI*25,dash=circum*pct/100;document.getElementById("heroRing").setAttribute("stroke-dasharray",dash+","+circum);document.getElementById("pillStages").textContent=s.completed_stages+"/"+s.total_stages+" 阶段";var grid=document.getElementById("stageGrid");grid.innerHTML="";s.stages.forEach(function(st,i){var unlocked=i===0||s.stages[i-1].completed;var card=document.createElement("div");card.className="stage";if(st.completed)card.className+=" completed";if(!unlocked&&!st.completed)card.className+=" locked";var stars="";if(st.completed){for(var j=0;j<3;j++)stars+='<span class="'+(j<st.stars?"star-lit":"")+'">★</span>'}else stars="☆☆☆";var pp=st.total_words>0?Math.round(st.words_learned/st.total_words*100):0;card.innerHTML='<div class="top-row"><span class="name">'+st.name+'</span><span class="ico">'+(st.completed?"✓":(unlocked?st.icon:"🔒"))+'</span></div><div class="desc">'+st.desc+'</div><div class="word-count">'+st.words_learned+'/'+st.total_words+' 词</div><div class="bar-wrap"><div class="bar-fill" style="width:'+pp+'%"></div></div><div class="stars-row">'+stars+'</div>'+(unlocked?'<a href="/learn/stage/'+st.stage_id+'" class="enter-link">'+(st.completed?"复习":"开始")+'</a>':'<div class="enter-link-disabled">未解锁</div>')+(st.best_score>0?'<div class="best-score">最佳 '+st.best_score+' 分</div>':'');grid.appendChild(card)});lucide.createIcons()}catch(e){}}
+</script>
+</body>
+</html>

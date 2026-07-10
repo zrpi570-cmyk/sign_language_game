@@ -1,0 +1,1596 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>挑战 · 手语星球</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --page: #f5f3f0;
+            --card: #ffffff;
+            --card-edge: rgba(0,0,0,0.05);
+            --text: #1a1720;
+            --text-secondary: #6c6878;
+            --text-muted: #a8a3b0;
+            --blue: #4f85e6;
+            --blue-soft: #f0f4fe;
+            --green: #3b9e72;
+            --green-soft: #edf8f2;
+            --amber: #c89030;
+            --amber-bg: #fdf6e8;
+            --rose: #d95555;
+            --rose-light: #fdf0ef;
+            --radius: 10px;
+            --shadow: 0 1px 2px rgba(0,0,0,0.03), 0 2px 12px rgba(0,0,0,0.02);
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.03);
+        }
+        body {
+            font-family: "Noto Sans SC", -apple-system, sans-serif;
+            background: var(--page);
+            color: var(--text);
+            font-size: 13px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            padding-top: 72px;
+            min-height: 100vh;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image: radial-gradient(rgba(79,133,230,0.035) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar { width: 3px; height: 3px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d5d0c8; border-radius: 3px; }
+
+        /* ── buttons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 7px 16px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 12px;
+            font-weight: 600;
+            font-family: "Noto Sans SC", sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            letter-spacing: 0.01em;
+        }
+        .btn-primary {
+            background: var(--blue);
+            color: #fff;
+            box-shadow: 0 1px 4px rgba(79,133,230,0.15);
+        }
+        .btn-primary:hover {
+            background: #3d72d4;
+            box-shadow: 0 2px 12px rgba(79,133,230,0.2);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: #f0efea;
+            color: var(--text-secondary);
+        }
+        .btn-secondary:hover {
+            background: #e6e5de;
+        }
+        .btn-sm {
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--card-edge);
+            background: var(--card);
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .btn-sm:hover {
+            background: #f0efea;
+            border-color: #c8c4bd;
+        }
+        .btn-large {
+            padding: 10px 28px;
+            font-size: 14px;
+            border-radius: var(--radius);
+        }
+
+        /* ── nav ── */
+        .nav-bar {
+            position: fixed;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: calc(100% - 32px);
+            max-width: 1060px;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 16px;
+            background: rgba(255,255,255,0.78);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 40px;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03), 0 4px 16px rgba(0,0,0,0.02);
+        }
+        .nav-home {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .nav-home .dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            background: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #fff;
+        }
+        .nav-home .sub {
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-left: 1px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1px;
+        }
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .nav-links a:hover {
+            color: var(--text);
+            background: rgba(0,0,0,0.02);
+        }
+        .nav-links a.active {
+            color: var(--blue);
+            background: var(--blue-soft);
+        }
+        .nav-links a i {
+            font-size: 12px;
+            opacity: 0.5;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+        }
+        .nav-right .usr-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.03);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 13px;
+        }
+        .nav-right .usr-btn:hover {
+            background: rgba(0,0,0,0.06);
+            color: var(--text);
+        }
+
+        /* auth dropdown */
+        .auth-panel {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 240px;
+            background: var(--card);
+            border: 1px solid var(--card-edge);
+            border-radius: 12px;
+            padding: 16px 18px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-3px);
+            transition: all 0.2s ease;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            z-index: 200;
+        }
+        .auth-panel.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .auth-panel .tabs {
+            display: flex;
+            gap: 3px;
+            background: #f5f4f2;
+            border-radius: 6px;
+            padding: 2px;
+            margin-bottom: 12px;
+        }
+        .auth-panel .tab {
+            flex: 1;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .auth-panel .tab.active {
+            background: #fff;
+            color: var(--blue);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+        }
+        .auth-panel .fg {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .auth-panel .fg label {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            color: var(--text-muted);
+            width: 14px;
+            font-size: 12px;
+        }
+        .auth-panel .fi {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid var(--card-edge);
+            border-radius: 6px;
+            background: #fafaf8;
+            color: var(--text);
+            font-size: 12px;
+            outline: none;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .auth-panel .fi:focus {
+            border-color: var(--blue);
+            background: #fff;
+        }
+        .auth-panel .btn {
+            width: 100%;
+            padding: 7px;
+            border: none;
+            border-radius: 6px;
+            background: var(--blue);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 2px;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .auth-panel .btn:hover { opacity: 0.9; }
+        .auth-panel .ae {
+            color: #e33;
+            font-size: 11px;
+            padding: 5px;
+            background: #fef2f2;
+            border-radius: 5px;
+            margin-bottom: 6px;
+            display: none;
+        }
+        .auth-panel .user-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 2px 0;
+        }
+        .auth-panel .user-row .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), #6da0f2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 12px;
+        }
+        .auth-panel .user-row .detail .name {
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .auth-panel .user-row .detail .meta {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+        .auth-panel .signout {
+            width: 100%;
+            padding: 7px;
+            border: 1px solid var(--card-edge);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 8px;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .auth-panel .signout:hover {
+            color: #e33;
+            border-color: rgba(238,51,51,0.12);
+        }
+
+        /* ── main ── */
+        .cam-page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 10px 20px 44px;
+        }
+
+        /* ── 菜单栏样式 ── */
+        .cam-menu {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 12px 20px;
+            border: 1px solid var(--card-edge);
+            box-shadow: var(--shadow-card);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .cam-menu-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .cam-menu-left .icon-wrap {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: var(--blue-soft);
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .cam-menu-left .title-wrap h2 {
+            font-size: 15px;
+            font-weight: 700;
+            font-family: "Noto Sans SC", sans-serif;
+            letter-spacing: -0.2px;
+        }
+        .cam-menu-left .title-wrap p {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .cam-menu-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .cam-menu-right .diff-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-family: "Noto Sans SC", sans-serif;
+            padding: 3px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--card-edge);
+            background: #f8f7f4;
+        }
+        .cam-menu-right .diff-tag.active {
+            border-color: var(--blue);
+            background: var(--blue-soft);
+            color: var(--blue);
+        }
+        .cam-menu-right .diff-tag i {
+            margin-right: 3px;
+            font-size: 11px;
+        }
+        .cam-menu-right .btn {
+            font-size: 12px;
+            padding: 5px 14px;
+        }
+
+        /* ── setup screen ── */
+        .setup-screen {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 20px 24px 24px;
+            border: 1px solid var(--card-edge);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+        }
+        .setup-screen .cam-preview {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: #1a181c;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 12px;
+            border: 1px solid var(--card-edge);
+        }
+        .setup-screen .cam-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .setup-screen .cat-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .setup-screen .cat-selector label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .setup-screen .cat-selector select {
+            padding: 5px 12px;
+            border: 1px solid var(--card-edge);
+            border-radius: 6px;
+            background: #fafaf8;
+            color: var(--text);
+            font-size: 12px;
+            font-family: "Noto Sans SC", sans-serif;
+            outline: none;
+            cursor: pointer;
+            transition: border 0.2s;
+            min-width: 120px;
+        }
+        .setup-screen .cat-selector select:focus {
+            border-color: var(--blue);
+            background: #fff;
+        }
+
+        .setup-screen .camera-status {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .setup-screen .camera-status.success {
+            color: var(--green);
+        }
+        .setup-screen .camera-status.error {
+            color: var(--rose);
+        }
+        .setup-screen .btn {
+            font-size: 14px;
+            padding: 10px 32px;
+        }
+        .setup-screen .hint-text {
+            margin-top: 8px;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .setup-screen .hint-text i {
+            margin-right: 4px;
+        }
+
+        /* ── game layout ── */
+        .cam-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+
+        .cam-panel {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--card-edge);
+            box-shadow: var(--shadow-card);
+        }
+        .cam-panel-header {
+            padding: 8px 14px;
+            font-weight: 600;
+            font-size: 12px;
+            background: #f8f7f4;
+            border-bottom: 1px solid var(--card-edge);
+            text-align: center;
+            font-family: "Noto Sans SC", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .cam-panel-header i {
+            color: var(--blue);
+            font-size: 13px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            background: #1a181c;
+            aspect-ratio: 4/3;
+        }
+        .video-wrapper video,
+        .video-wrapper canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .video-wrapper canvas {
+            z-index: 2;
+        }
+
+        /* overlays */
+        .ready-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(4px);
+            z-index: 10;
+            color: #fff;
+            flex-direction: column;
+            text-align: center;
+            padding: 16px;
+        }
+        .ready-overlay .main-text {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .ready-overlay .sub-text {
+            font-size: 14px;
+            opacity: 0.7;
+            font-weight: 400;
+        }
+        .ready-overlay .countdown-big {
+            font-size: 52px;
+            font-weight: 800;
+            color: #fbbf24;
+        }
+        .ready-overlay .result-score {
+            font-size: 40px;
+            font-weight: 800;
+            color: #fbbf24;
+        }
+        .ready-overlay .result-grade {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 2px 0;
+        }
+
+        .word-display {
+            text-align: center;
+            padding: 10px 12px;
+            border-top: 1px solid var(--card-edge);
+        }
+        .word-display .word {
+            font-size: 30px;
+            font-weight: 800;
+            font-family: "Noto Sans SC", sans-serif;
+            letter-spacing: -0.5px;
+        }
+        .word-display .hint {
+            color: var(--text-secondary);
+            font-size: 11px;
+            margin-top: 1px;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+
+        .score-display {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            padding: 8px 10px;
+            background: #f8f7f4;
+            border-top: 1px solid var(--card-edge);
+            border-bottom: 1px solid var(--card-edge);
+        }
+        .score-item {
+            text-align: center;
+        }
+        .score-item .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--blue);
+            display: block;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+        .score-item .value.gold {
+            color: var(--amber);
+        }
+        .score-item .label {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            font-family: "Noto Sans SC", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .cam-progress {
+            padding: 8px 14px;
+        }
+        .cam-progress-bar {
+            height: 3px;
+            background: #eeebe5;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .cam-progress-fill {
+            height: 100%;
+            background: var(--blue);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+        .cam-progress-text {
+            text-align: center;
+            font-size: 10.5px;
+            color: var(--text-muted);
+            margin-top: 3px;
+            font-family: "Noto Sans SC", sans-serif;
+        }
+
+        .cam-status {
+            text-align: center;
+            padding: 10px 14px;
+            font-weight: 600;
+            font-size: 13px;
+            font-family: "Noto Sans SC", sans-serif;
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-top: 1px solid var(--card-edge);
+        }
+        .cam-status .status-sub {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .cam-status .timer-bar {
+            width: 100%;
+            max-width: 160px;
+            height: 3px;
+            background: #eeebe5;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        .cam-status .timer-bar-fill {
+            height: 100%;
+            background: var(--blue);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .cam-actions {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            padding: 8px 14px 12px;
+            border-top: 1px solid var(--card-edge);
+        }
+        .cam-actions .btn {
+            flex: 1;
+            padding: 5px 10px;
+            font-size: 10.5px;
+        }
+        .cam-actions .btn-secondary {
+            flex: 0 0 auto;
+            padding: 5px 12px;
+        }
+
+        .hand-feedback {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 5;
+            display: flex;
+            gap: 5px;
+        }
+        .hand-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .hand-dot.active {
+            background: var(--green);
+            border-color: var(--green);
+            box-shadow: 0 0 10px rgba(59,158,114,0.4);
+        }
+        .hand-dot.active-2 {
+            background: #fbbf24;
+            border-color: #fbbf24;
+            box-shadow: 0 0 10px rgba(251,191,36,0.4);
+        }
+
+        .debug-toggle {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 10px;
+            color: var(--text-muted);
+            cursor: pointer;
+            opacity: 0.25;
+            z-index: 100;
+            background: var(--card);
+            border: 1px solid var(--card-edge);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s;
+        }
+        .debug-toggle:hover {
+            opacity: 0.6;
+        }
+        #debugPanel {
+            display: none;
+            position: fixed;
+            bottom: 38px;
+            right: 10px;
+            width: 250px;
+            max-height: 160px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.85);
+            color: #0f0;
+            font-size: 9px;
+            font-family: monospace;
+            padding: 5px 7px;
+            border-radius: 4px;
+            z-index: 99;
+            line-height: 1.3;
+        }
+
+        /* ── responsive ── */
+        @media (max-width: 820px) {
+            .cam-layout {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                max-width: 100%;
+            }
+            .cam-menu {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 12px 16px;
+            }
+            .cam-menu-left .title-wrap h2 {
+                font-size: 14px;
+            }
+            .cam-menu-left .title-wrap p {
+                font-size: 11px;
+            }
+            .cam-menu-right {
+                justify-content: center;
+            }
+            .cam-menu-right .diff-tag {
+                font-size: 10px;
+                padding: 2px 10px;
+            }
+            .nav-bar {
+                width: calc(100% - 16px);
+                top: 10px;
+            }
+            .nav {
+                padding: 6px 10px;
+                border-radius: 24px;
+            }
+            .nav-links a {
+                padding: 4px 8px;
+                font-size: 10.5px;
+            }
+            .nav-links a span {
+                display: none;
+            }
+            body {
+                padding-top: 68px;
+            }
+            .cam-page {
+                padding: 8px 12px 32px;
+            }
+            .setup-screen {
+                padding: 18px 16px 22px;
+                margin: 0 4px;
+            }
+            .setup-screen .btn {
+                font-size: 13px;
+                padding: 8px 24px;
+            }
+            .word-display .word {
+                font-size: 28px;
+            }
+            .score-item .value {
+                font-size: 18px;
+            }
+            .ready-overlay .main-text {
+                font-size: 26px;
+            }
+            .ready-overlay .countdown-big {
+                font-size: 44px;
+            }
+            .ready-overlay .result-score {
+                font-size: 34px;
+            }
+        }
+        @media (max-width: 600px) {
+            .cam-menu {
+                padding: 10px 12px;
+            }
+            .cam-menu-left {
+                gap: 8px;
+            }
+            .cam-menu-left .icon-wrap {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+            .cam-menu-left .title-wrap h2 {
+                font-size: 13px;
+            }
+            .cam-menu-left .title-wrap p {
+                font-size: 10px;
+            }
+            .cam-menu-right .diff-tag {
+                font-size: 9px;
+                padding: 2px 8px;
+            }
+            .cam-menu-right .btn {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+            .setup-screen {
+                padding: 14px 12px 18px;
+            }
+            .setup-screen .cat-selector {
+                flex-direction: column;
+                gap: 4px;
+            }
+            .setup-screen .cat-selector select {
+                width: 100%;
+            }
+            .cam-panel-header {
+                font-size: 11px;
+                padding: 6px 10px;
+            }
+            .word-display {
+                padding: 8px 10px;
+            }
+            .word-display .word {
+                font-size: 24px;
+            }
+            .score-display {
+                gap: 10px;
+                padding: 6px 8px;
+            }
+            .score-item .value {
+                font-size: 16px;
+            }
+            .score-item .label {
+                font-size: 8.5px;
+            }
+            .cam-status {
+                font-size: 12px;
+                min-height: 38px;
+                padding: 8px 10px;
+            }
+            .cam-status .status-sub {
+                font-size: 10px;
+            }
+            .cam-actions {
+                flex-wrap: wrap;
+                padding: 6px 10px 10px;
+            }
+            .cam-actions .btn {
+                flex: 1;
+                min-width: 50px;
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            .cam-actions .btn-secondary {
+                flex: 1;
+            }
+            .ready-overlay .main-text {
+                font-size: 22px;
+            }
+            .ready-overlay .countdown-big {
+                font-size: 38px;
+            }
+            .ready-overlay .result-score {
+                font-size: 28px;
+            }
+            .ready-overlay .result-grade {
+                font-size: 14px;
+            }
+            .setup-screen .btn {
+                font-size: 12px;
+                padding: 8px 20px;
+            }
+            .cam-progress {
+                padding: 6px 10px;
+            }
+            .cam-progress-text {
+                font-size: 9.5px;
+            }
+            .hand-dot {
+                width: 6px;
+                height: 6px;
+            }
+        }
+        @media (max-width: 480px) {
+            .nav-links a {
+                padding: 3px 5px;
+                font-size: 9px;
+            }
+            .nav-links a i {
+                font-size: 10px;
+            }
+            .cam-menu-left .title-wrap h2 {
+                font-size: 12px;
+            }
+            .cam-menu-left .title-wrap p {
+                font-size: 9.5px;
+            }
+            .cam-menu-right .diff-tag {
+                font-size: 8px;
+                padding: 1px 6px;
+            }
+            .cam-menu-right .btn {
+                font-size: 10px;
+                padding: 3px 10px;
+            }
+            .word-display .word {
+                font-size: 20px;
+            }
+            .score-item .value {
+                font-size: 14px;
+            }
+            .ready-overlay .main-text {
+                font-size: 18px;
+            }
+            .ready-overlay .countdown-big {
+                font-size: 30px;
+            }
+            .ready-overlay .result-score {
+                font-size: 24px;
+            }
+            .setup-screen {
+                padding: 10px 8px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- nav -->
+    <div class="nav-bar">
+        <nav class="nav">
+            <a href="/" class="nav-home">
+                <div class="dot">🤟</div>
+                手语星球<span class="sub">Sign</span>
+            </a>
+            <div class="nav-links">
+                <a href="/"><i class="fas fa-home"></i><span>首页</span></a>
+                <a href="/game"><i class="fas fa-gamepad"></i><span>游戏</span></a>
+                <a href="/learning"><i class="fas fa-library"></i><span>词库</span></a>
+                <a href="/learn"><i class="fas fa-book-open"></i><span>学习</span></a>
+                <a href="/learn/review"><i class="fas fa-rotate-right"></i><span>复习</span></a>
+                <a href="/camera-game" class="active"><i class="fas fa-camera"></i><span>AI手势镜</span></a>
+            </div>
+            <div class="nav-right">
+                <button class="usr-btn" id="authToggleBtn"><i class="fas fa-user"></i></button>
+                <div class="auth-panel" id="authDrop">
+                    <div id="authNotLoggedIn">
+                        <div class="tabs"><button class="tab active" data-tab="login">登录</button><button class="tab" data-tab="register">注册</button></div>
+                        <div class="ae" id="authError"></div>
+                        <div class="fg"><label><i class="fas fa-user"></i></label><input type="text" id="loginUsername" class="fi" placeholder="用户名" maxlength="20"></div>
+                        <div class="fg"><label><i class="fas fa-lock"></i></label><input type="password" id="loginPassword" class="fi" placeholder="密码"></div>
+                        <div class="fg" id="confirmGroup" style="display:none"><label><i class="fas fa-shield"></i></label><input type="password" id="authConfirm" class="fi" placeholder="确认密码"></div>
+                        <button class="btn" id="authSubmitBtn">登录</button>
+                    </div>
+                    <div id="authLoggedIn" style="display:none">
+                        <div class="user-row"><div class="avatar">🤟</div><div class="detail"><div class="name" id="userName">用户</div><div class="meta" id="userMeta">Lv.1 · 0 XP</div></div></div>
+                        <button class="signout" id="logoutBtn">退出</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main class="cam-page">
+        <!-- 菜单栏 -->
+        <div class="cam-menu">
+            <div class="cam-menu-left">
+                <div class="icon-wrap"><i class="fas fa-camera"></i></div>
+                <div class="title-wrap">
+                    <h2>手语挑战</h2>
+                    <p>使用摄像头比划手势，AI实时识别评分</p>
+                </div>
+            </div>
+            <div class="cam-menu-right">
+                <span class="diff-tag" data-diff="easy"><i class="fas fa-seedling"></i> 简单</span>
+                <span class="diff-tag active" data-diff="medium"><i class="fas fa-fire"></i> 中等</span>
+                <span class="diff-tag" data-diff="hard"><i class="fas fa-gem"></i> 困难</span>
+                <button id="startCamGameBtn" class="btn btn-primary"><i class="fas fa-play"></i> 开始</button>
+            </div>
+        </div>
+
+        <!-- Setup Screen -->
+        <div class="setup-screen" id="setupScreen">
+            <div class="cat-selector">
+                <label><i class="fas fa-tags"></i> 分类</label>
+                <select id="categorySelect">
+                    <option value="">全部分类</option>
+                </select>
+            </div>
+            <div class="cam-preview" id="setupPreview">
+                <video id="setupVideo" autoplay muted playsinline></video>
+            </div>
+            <div class="camera-status" id="cameraStatus"><i class="fas fa-info-circle"></i> 请允许摄像头访问</div>
+            <div class="hint-text"><i class="fas fa-lightbulb"></i> 请确保摄像头已授权，在明亮环境下使用</div>
+        </div>
+
+        <!-- Game Screen -->
+        <div class="cam-layout" id="gameScreen" style="display:none">
+            <!-- Left: Reference -->
+            <div class="cam-panel">
+                <div class="cam-panel-header"><i class="fas fa-play-circle"></i> 参考手势</div>
+                <div class="video-wrapper" id="refVideoWrapper">
+                    <video id="refVideo" autoplay loop muted playsinline><source src="" type="video/mp4"></video>
+                    <div class="ready-overlay phase-watch" id="watchOverlay">
+                        <div class="main-text" id="watchWord" style="font-size:26px"></div>
+                        <div class="sub-text">观看手势演示</div>
+                    </div>
+                </div>
+                <div class="word-display">
+                    <div class="word" id="currentWord">-</div>
+                    <div class="hint" id="wordHint">准备中...</div>
+                </div>
+            </div>
+
+            <!-- Right: Camera -->
+            <div class="cam-panel">
+                <div class="cam-panel-header"><i class="fas fa-video"></i> 你的手势</div>
+                <div class="video-wrapper" id="camVideoWrapper">
+                    <video id="camVideo" autoplay muted playsinline></video>
+                    <canvas id="camCanvas"></canvas>
+                    <div class="ready-overlay" id="gameOverlay" style="display:none">
+                        <div id="overlayContent"><div class="sub-text">准备...</div></div>
+                    </div>
+                    <div class="hand-feedback" id="handFeedback">
+                        <span class="hand-dot" id="handDot1"></span>
+                        <span class="hand-dot" id="handDot2"></span>
+                    </div>
+                </div>
+                <div class="score-display">
+                    <div class="score-item"><span class="value" id="scoreValue">0</span><span class="label">得分</span></div>
+                    <div class="score-item"><span class="value gold" id="streakValue">0</span><span class="label">连击</span></div>
+                    <div class="score-item"><span class="value" id="totalWordsValue">0</span><span class="label">已挑战</span></div>
+                </div>
+                <div class="cam-progress">
+                    <div class="cam-progress-bar"><div class="cam-progress-fill" id="gameProgress" style="width:0%"></div></div>
+                    <div class="cam-progress-text" id="progressText">第 0/0 词</div>
+                </div>
+                <div class="cam-status" id="gameStatus">
+                    <div>准备开始...</div>
+                    <div class="status-sub">点击"开始挑战"进入游戏</div>
+                </div>
+                <div class="cam-actions">
+                    <button id="skipBtn" class="btn btn-secondary"><i class="fas fa-forward"></i> 跳过</button>
+                    <button id="quitCamBtn" class="btn btn-secondary"><i class="fas fa-times"></i> 退出</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="debug-toggle" id="debugToggle">?</div>
+    <div id="debugPanel"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="/static/js/auth.js"></script>
+    <script>
+        var currentUser = null,
+            BASE = "",
+            gameWords = [],
+            currentIndex = 0,
+            totalScore = 0,
+            streakCount = 0;
+        var bestStreak = 0,
+            difficulty = "medium",
+            selectedCategory = "",
+            isCapturing = false,
+            videoStream = null;
+        var hands = null,
+            camera = null,
+            currentLandmarks = null,
+            debugMode = false;
+        var captureScores = [],
+            captureFrame = 0,
+            analysisActive = false;
+
+        document.addEventListener("auth:login", function(e) {
+            currentUser = e.detail;
+            var b = document.getElementById("userBadge");
+            if (b) b.textContent = currentUser.username + " Lv." + (currentUser.level || 1);
+        });
+        document.addEventListener("auth:logout", function() { currentUser = null; });
+        if (Auth.isLoggedIn()) {
+            currentUser = Auth.getUser();
+            var b = document.getElementById("userBadge");
+            if (b) b.textContent = currentUser.username + " Lv." + (currentUser.level || 1);
+        }
+
+        // Nav auth
+        var authOpen = false;
+        document.getElementById("authToggleBtn").addEventListener("click", function(e) {
+            e.stopPropagation();
+            authOpen = !authOpen;
+            document.getElementById("authDrop").classList.toggle("open", authOpen);
+        });
+        document.addEventListener("click", function(e) {
+            var d = document.getElementById("authDrop");
+            if (authOpen && !d.contains(e.target) && e.target !== document.getElementById("authToggleBtn")) {
+                authOpen = false;
+                d.classList.remove("open");
+            }
+        });
+
+        var authTab = "login";
+        document.querySelectorAll(".tab").forEach(function(t) {
+            t.addEventListener("click", function() {
+                document.querySelectorAll(".tab").forEach(function(x) { x.classList.remove("active"); });
+                t.classList.add("active");
+                authTab = t.dataset.tab;
+                document.getElementById("authSubmitBtn").textContent = authTab === "register" ? "注册" : "登录";
+                document.getElementById("confirmGroup").style.display = authTab === "register" ? "flex" : "none";
+                document.getElementById("authError").style.display = "none";
+            });
+        });
+
+        document.getElementById("authSubmitBtn").addEventListener("click", async function() {
+            var u = document.getElementById("loginUsername").value.trim();
+            var p = document.getElementById("loginPassword").value;
+            var e = document.getElementById("authError");
+            var r;
+            if (authTab === "register") {
+                var c = document.getElementById("authConfirm").value;
+                if (p !== c) { e.textContent = "两次密码不一致"; e.style.display = "block"; return; }
+                r = await Auth.register(u, p, c);
+            } else {
+                r = await Auth.login(u, p);
+            }
+            if (r.error) { e.textContent = r.error; e.style.display = "block"; return; }
+            authOpen = false;
+            document.getElementById("authDrop").classList.remove("open");
+            currentUser = r.user;
+            document.getElementById("authNotLoggedIn").style.display = "none";
+            document.getElementById("authLoggedIn").style.display = "block";
+            document.getElementById("userName").textContent = r.user.username;
+            document.getElementById("userMeta").textContent = "Lv." + (r.user.level || 1) + " · " + (r.user.xp || 0) + " XP";
+        });
+
+        document.getElementById("logoutBtn").addEventListener("click", async function() {
+            await Auth.logout();
+            document.getElementById("authLoggedIn").style.display = "none";
+            document.getElementById("authNotLoggedIn").style.display = "block";
+            currentUser = null;
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var loginBtn = document.getElementById("loginBtn");
+            var registerBtn = document.getElementById("registerBtn");
+            var logoutBtn = document.getElementById("logoutBtn");
+            if (loginBtn) {
+                loginBtn.addEventListener("click", async function() {
+                    var u = document.getElementById("loginUsername").value.trim();
+                    var p = document.getElementById("loginPassword").value;
+                    var r = await Auth.login(u, p);
+                    if (r.error) alert(r.error);
+                });
+            }
+            if (registerBtn) {
+                registerBtn.addEventListener("click", function() { Auth.showAuthModal("register"); });
+            }
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", async function() { await Auth.logout(); });
+            }
+            document.getElementById("debugToggle").addEventListener("click", function() {
+                debugMode = !debugMode;
+                document.getElementById("debugPanel").style.display = debugMode ? "block" : "none";
+            });
+
+            // 菜单栏难度切换
+            document.querySelectorAll(".cam-menu-right .diff-tag").forEach(function(tag) {
+                tag.addEventListener("click", function() {
+                    document.querySelectorAll(".cam-menu-right .diff-tag").forEach(function(t) { t.classList.remove(
+                            "active"); });
+                    tag.classList.add("active");
+                    difficulty = tag.dataset.diff;
+                });
+            });
+        });
+
+        async function loadCategories() {
+            var r = await fetch(BASE + "/api/sign/stats");
+            var d = await r.json();
+            if (d.code !== 0) return;
+            var sel = document.getElementById("categorySelect");
+            d.data.categories.forEach(function(t) {
+                var opt = document.createElement("option");
+                opt.value = t.category;
+                opt.textContent = t.category + " (" + t.cnt + ")";
+                sel.appendChild(opt);
+            });
+            sel.addEventListener("change", function() {
+                selectedCategory = this.value;
+            });
+        }
+        loadCategories();
+
+        async function initCam(video) {
+            var s = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: "user" } });
+            video.srcObject = s;
+            return s;
+        }
+
+        function initMP(videoEl, canvasEl) {
+            return new Promise(function(res, rej) {
+                try {
+                    hands = new Hands({ locateFile: function(f) { return "https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/" + f; } });
+                    hands.setOptions({ maxNumHands: 2, modelComplexity: 1, minDetectionConfidence: 0.6, minTrackingConfidence: 0.5 });
+                    hands.onResults(function(results) {
+                        drawLM(canvasEl, results);
+                        currentLandmarks = results;
+                        var d1 = document.getElementById("handDot1"),
+                            d2 = document.getElementById("handDot2");
+                        if (!d1 || !d2) return;
+                        var n = results && results.multiHandLandmarks ? results.multiHandLandmarks.length : 0;
+                        d1.className = "hand-dot" + (n >= 1 ? " active" : "");
+                        d2.className = "hand-dot" + (n >= 2 ? " active-2" : "");
+                        if (isCapturing) analyzePose(results);
+                    });
+                    camera = new Camera(videoEl, { onFrame: async function() { try { await hands.send({ image: videoEl }); } catch (e) {} }, width: 640, height: 480 });
+                    res();
+                } catch (e) { rej(e); }
+            });
+        }
+
+        function drawLM(canvas, results) {
+            var ctx = canvas.getContext("2d");
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (!results || !results.multiHandLandmarks) return;
+            var conns = [
+                [0, 1],
+                [1, 2],
+                [2, 3],
+                [3, 4],
+                [0, 5],
+                [5, 6],
+                [6, 7],
+                [7, 8],
+                [0, 9],
+                [9, 10],
+                [10, 11],
+                [11, 12],
+                [0, 13],
+                [13, 14],
+                [14, 15],
+                [15, 16],
+                [0, 17],
+                [17, 18],
+                [18, 19],
+                [19, 20],
+                [5, 9],
+                [9, 13],
+                [13, 17]
+            ];
+            results.multiHandLandmarks.forEach(function(lm, idx) {
+                ctx.strokeStyle = idx === 0 ? "rgba(79,133,230,0.5)" : "rgba(59,158,114,0.5)";
+                ctx.lineWidth = 1.5;
+                conns.forEach(function(c) {
+                    ctx.beginPath();
+                    ctx.moveTo(lm[c[0]].x * canvas.width, lm[c[0]].y * canvas.height);
+                    ctx.lineTo(lm[c[1]].x * canvas.width, lm[c[1]].y * canvas.height);
+                    ctx.stroke();
+                });
+                lm.forEach(function(p) {
+                    ctx.fillStyle = idx === 0 ? "rgba(79,133,230,0.7)" : "rgba(59,158,114,0.7)";
+                    ctx.beginPath();
+                    ctx.arc(p.x * canvas.width, p.y * canvas.height, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            });
+        }
+
+        function calcScore(results) {
+            if (!results || !results.multiHandLandmarks || results.multiHandLandmarks.length === 0)
+                return { total: 0, handsDetected: 0, fSpread: 0, symmetry: 0, center: 0 };
+            var n = results.multiHandLandmarks.length;
+            var lm = results.multiHandLandmarks;
+            var hs = n >= 2 ? 20 : (n >= 1 ? 12 : 0);
+            var fs = 0;
+            lm.forEach(function(l) {
+                var w = l[0],
+                    tips = [l[4], l[8], l[12], l[16], l[20]];
+                tips.forEach(function(t, i) {
+                    var d = Math.sqrt((t.x - w.x) * (t.x - w.x) + (t.y - w.y) * (t.y - w.y));
+                    if (d > (i === 0 ? 0.15 : 0.25)) fs += 6;
+                });
+            });
+            fs = Math.min(fs / Math.max(lm.length, 1), 30);
+            var cs = 0;
+            lm.forEach(function(l) {
+                var cx = 0,
+                    cy = 0;
+                l.forEach(function(p) { cx += p.x;
+                    cy += p.y; });
+                cx /= l.length;
+                cy /= l.length;
+                cs += Math.max(0, (1 - (Math.abs(cx - 0.5) * 2 + Math.abs(cy - 0.5) * 2) / 2) * 15);
+            });
+            cs = Math.min(cs / Math.max(lm.length, 1), 15);
+            var sym = n >= 2 ? Math.min(15, 10) : 5;
+            var total = Math.round(hs + fs + cs + sym);
+            return { total: Math.min(total, 100), handsDetected: n, fSpread: Math.round(fs), symmetry: sym, center: Math.round(cs) };
+        }
+
+        function startCap() { captureScores = [];
+            captureFrame = 0;
+            analysisActive = true;
+            isCapturing = true; }
+
+        function stopCap() { analysisActive = false;
+            isCapturing = false; }
+
+        function analyzePose(r) {
+            if (!analysisActive) return;
+            captureFrame++;
+            if (captureFrame % 3 !== 0) return;
+            captureScores.push(calcScore(r));
+        }
+
+        function finalScore() {
+            if (captureScores.length === 0) return { score: 0, grade: "F" };
+            var best = captureScores.reduce(function(a, b) { return a.total > b.total ? a : b; });
+            var avg = captureScores.reduce(function(s, x) { return s + x.total; }, 0) / captureScores.length;
+            var score = Math.round(best.total * 0.6 + avg * 0.4);
+            var grade = "F";
+            if (score >= 90) grade = "S";
+            else if (score >= 75) grade = "A";
+            else if (score >= 60) grade = "B";
+            else if (score >= 40) grade = "C";
+            else if (score >= 20) grade = "D";
+            return { score: score, grade: grade, best: best.total, avg: Math.round(avg), frames: captureScores.length };
+        }
+
+        async function loadWords() {
+            var diffMap = { easy: 1, medium: 3, hard: 5 };
+            var maxDiff = diffMap[difficulty] || 3;
+            var cnt = difficulty === "easy" ? 30 : (difficulty === "medium" ? 50 : 100);
+            var url = BASE + "/api/learning/list?per_page=" + cnt;
+            if (selectedCategory) url += "&category=" + encodeURIComponent(selectedCategory);
+            var r = await fetch(url);
+            var d = await r.json();
+            if (d.code !== 0) return [];
+            var w = d.data.items.filter(function(x) { return x.difficulty <= maxDiff; });
+            for (var i = w.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = w[i];
+                w[i] = w[j];
+                w[j] = t; }
+            return w.slice(0, cnt);
+        }
+
+        async function startGame() {
+            var st = document.getElementById("cameraStatus");
+            st.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 连接摄像头中...';
+            st.className = "camera-status";
+            try {
+                videoStream = await initCam(document.getElementById("camVideo"));
+                await initCam(document.getElementById("setupVideo"));
+                st.innerHTML = '<i class="fas fa-check-circle"></i> 摄像头就绪！';
+                st.className = "camera-status success";
+                gameWords = await loadWords();
+                if (gameWords.length === 0) { st.innerHTML = '<i class="fas fa-exclamation-circle"></i> 词库加载失败';
+                    st.className = "camera-status error"; return; }
+                currentIndex = 0;
+                totalScore = 0;
+                streakCount = 0;
+                document.getElementById("setupScreen").style.display = "none";
+                document.getElementById("gameScreen").style.display = "grid";
+                await initMP(document.getElementById("camVideo"), document.getElementById("camCanvas"));
+                document.getElementById("totalWordsValue").textContent = gameWords.length;
+                camera.start();
+                startRound();
+            } catch (e) {
+                st.innerHTML = '<i class="fas fa-exclamation-circle"></i> 摄像头错误: ' + e.message;
+                st.className = "camera-status error";
+            }
+        }
+
+        function startRound() {
+            if (currentIndex >= gameWords.length) { endGame(); return; }
+            var w = gameWords[currentIndex];
+            document.getElementById("gameProgress").style.width = (currentIndex / gameWords.length * 100) + "%";
+            document.getElementById("progressText").textContent = "第 " + (currentIndex + 1) + "/" + gameWords.length + " 词";
+            document.getElementById("currentWord").textContent = w.word;
+            document.getElementById("wordHint").textContent = w.category + " / " + w.word_type;
+            document.getElementById("watchWord").textContent = w.word;
+            var rv = document.getElementById("refVideo");
+            rv.src = BASE + w.video_path;
+            rv.load();
+            rv.play();
+            document.getElementById("watchOverlay").style.display = "flex";
+            document.getElementById("gameOverlay").style.display = "none";
+            document.getElementById("gameStatus").innerHTML = '<div><i class="fas fa-eye"></i> 观看手势演示</div><div class="status-sub">记住每个手部动作</div>';
+            clearTimeout(window._pt);
+            window._pt = setTimeout(function() { showReady(w); }, 3500);
+        }
+
+        function showReady(w) {
+            document.getElementById("watchOverlay").style.display = "none";
+            var ov = document.getElementById("gameOverlay");
+            ov.style.display = "flex";
+            document.getElementById("overlayContent").innerHTML = '<div class="sub-text">请做出这个手势</div><div class="main-text">' + w.word + '</div>';
+            document.getElementById("gameStatus").innerHTML = '<div><i class="fas fa-hourglass-half"></i> 准备！</div><div class="status-sub">3秒后开始录制</div>';
+            var cd = 3;
+            var ci = setInterval(function() {
+                cd--;
+                if (cd > 0) document.getElementById("overlayContent").innerHTML = '<div class="countdown-big">' + cd + '</div>';
+                if (cd <= 0) { clearInterval(ci);
+                    showCapture(w); }
+            }, 1000);
+        }
+
+        function showCapture(w) {
+            document.getElementById("gameOverlay").style.display = "none";
+            document.getElementById("gameStatus").innerHTML = '<div><i class="fas fa-hand-peace"></i> 比划手势中...</div><div class="status-sub">请比划手势</div>';
+            startCap();
+            var t0 = Date.now();
+            var ti = setInterval(function() {
+                var e = Date.now() - t0,
+                    p = Math.min(e / 5000 * 100, 100);
+                var sd = document.getElementById("gameStatus");
+                sd.innerHTML = '<div><i class="fas fa-hand-peace"></i> 比划手势中...</div><div class="timer-bar"><div class="timer-bar-fill" style="width:' + p + '%"></div></div><div class="status-sub">' + Math.ceil((5000 - e) / 1000) + 's</div>';
+                if (e >= 5000) { clearInterval(ti);
+                    stopCap();
+                    showRes(w); }
+            }, 100);
+        }
+
+        function showRes(w) {
+            var r = finalScore(),
+                s = r.score,
+                g = r.grade;
+            var passed = s >= 40;
+            if (passed) { streakCount++; if (streakCount > bestStreak) bestStreak = streakCount;
+                totalScore += s; } else streakCount = 0;
+            document.getElementById("scoreValue").textContent = totalScore;
+            document.getElementById("streakValue").textContent = streakCount;
+            var gc = { S: "#fbbf24", A: "#10b981", B: "#3b82f6", C: "#f59e0b", D: "#ef4444", F: "#6b7280" };
+            var gm = { S: "完美！手势非常标准！", A: "非常好！继续加油！", B: "不错！再练练会更好", C: "还可以，多看看视频", D: "需要更多练习", F: "未检测到有效手势" };
+            var ov = document.getElementById("gameOverlay");
+            ov.style.display = "flex";
+            document.getElementById("overlayContent").innerHTML =
+                '<div style="font-size:16px;color:' + (passed ? "var(--green)" : "var(--rose)") + ';font-weight:600;">' + (passed ? '<i class="fas fa-check-circle"></i> 通过！' : '<i class="fas fa-times-circle"></i> 未通过') + '</div>' +
+                '<div class="result-score" style="color:' + gc[g] + '">' + s + '</div>' +
+                '<div class="result-grade">' + gm[g] + '</div>' +
+                '<div style="font-size:11px;opacity:0.5;">最高 ' + r.best + ' 分</div>';
+            document.getElementById("gameStatus").innerHTML = '<div>得分: ' + s + '</div><div class="status-sub">' + gm[g] + '</div>';
+            if (currentUser) {
+                fetch(BASE + "/api/game/answer", { method: "POST", headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: currentUser.id, question_id: w.id, answer: w.word, answer_time: 5 }) });
+            }
+            clearTimeout(window._nt);
+            window._nt = setTimeout(function() { currentIndex++;
+                document.getElementById("gameOverlay").style.display = "none";
+                startRound(); }, 2200);
+        }
+
+        function endGame() {
+            var ov = document.getElementById("gameOverlay");
+            ov.style.display = "flex";
+            document.getElementById("overlayContent").innerHTML =
+                '<div style="font-size:38px;">🎉</div>' +
+                '<div style="font-size:19px;font-weight:800;margin:6px 0;">挑战完成！</div>' +
+                '<div class="result-score" style="color:#fbbf24;">' + totalScore + '</div>' +
+                '<div style="font-size:12px;color:rgba(255,255,255,0.6);">共 ' + gameWords.length + ' 个词汇 · 最佳连击 ' + bestStreak + '</div>' +
+                '<div style="margin-top:12px;"><button class="btn btn-primary" onclick="location.reload()"><i class="fas fa-rotate-left"></i> 再来一次</button></div>';
+            document.getElementById("gameStatus").innerHTML = '<div><i class="fas fa-trophy"></i> 游戏结束</div><div class="status-sub">总分: ' + totalScore + '</div>';
+        }
+
+        document.getElementById("skipBtn").addEventListener("click", function() {
+            clearTimeout(window._pt);
+            clearTimeout(window._nt);
+            stopCap();
+            currentIndex++;
+            document.getElementById("gameOverlay").style.display = "none";
+            startRound();
+        });
+
+        document.getElementById("quitCamBtn").addEventListener("click", function() {
+            if (!confirm("确定退出游戏？")) return;
+            stopCap();
+            if (camera) camera.stop();
+            if (videoStream) videoStream.getTracks().forEach(function(t) { t.stop(); });
+            document.getElementById("gameScreen").style.display = "none";
+            document.getElementById("setupScreen").style.display = "block";
+            document.getElementById("cameraStatus").innerHTML = '<i class="fas fa-info-circle"></i> 已退出';
+            document.getElementById("cameraStatus").className = "camera-status";
+        });
+
+        document.getElementById("startCamGameBtn").addEventListener("click", function() {
+            if (!currentUser) {
+                var u = document.getElementById("loginUsername").value.trim();
+                var p = document.getElementById("loginPassword").value;
+                if (!u) { alert("请先登录"); return; }
+                Auth.login(u, p).then(function(r) {
+                    if (r.error) { alert(r.error); return; }
+                    currentUser = r.user;
+                    startGame();
+                });
+            } else { startGame(); }
+        });
+    </script>
+</body>
+</html>

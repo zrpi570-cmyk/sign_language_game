@@ -1,0 +1,1402 @@
+﻿*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #02abab;
+    --primary-dark: #4338ca;
+    --primary-light: #eef2ff;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #f59e0b;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* ── 导航 ── */
+.nav {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-brand {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+    white-space: nowrap;
+}
+
+.nav-links {
+    display: flex;
+    gap: 4px;
+    flex: 1;
+    overflow-x: auto;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-user input {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 13px;
+    outline: none;
+}
+
+.nav-user input:focus {
+    border-color: var(--primary);
+}
+
+.user-badge {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+/* ── 按钮 ── */
+.btn, .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.btn-sm {
+    padding: 6px 14px;
+    font-size: 13px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: var(--border);
+    color: var(--text);
+}
+
+.btn-secondary:hover {
+    background: #cbd5e1;
+}
+
+/* ── Hero ── */
+.hero {
+    text-align: center;
+    padding: 80px 20px 60px;
+    background: linear-gradient(180deg, var(--primary-light) 0%, var(--bg) 100%);
+}
+
+.hero-content h1 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+.hero-content p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px 32px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    min-width: 120px;
+}
+
+.stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+    display: block;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    display: block;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1000px;
+    margin: -20px auto 60px;
+    padding: 0 20px;
+    position: relative;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.feature-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.feature-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* ════════════════════════════════════════
+   学习模式 - 通用
+   ════════════════════════════════════════ */
+
+.learn-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+.section-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.section-desc {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+/* ── 用户信息卡 ── */
+.user-profile {
+    background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+    border-radius: var(--radius-lg);
+    padding: 24px 32px;
+    margin-bottom: 32px;
+    color: #fff;
+}
+
+.profile-main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.profile-avatar {
+    font-size: 48px;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h2 {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+}
+
+.profile-stats span {
+    background: rgba(255,255,255,0.15);
+    padding: 2px 10px;
+    border-radius: 12px;
+}
+
+.profile-progress {
+    min-width: 200px;
+}
+
+.progress-text {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 4px;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: #fbbf24;
+    border-radius: 4px;
+    transition: width 0.5s;
+}
+
+.progress-detail {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 4px;
+    text-align: right;
+}
+
+/* ── 阶段网格 ── */
+.stage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.stage-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stage-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stage-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
+.stage-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.stage-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.stage-words {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.stage-progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.stage-progress-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 3px;
+    transition: width 0.5s;
+}
+
+.stage-stars {
+    margin-bottom: 12px;
+}
+
+.star {
+    font-size: 24px;
+    margin: 0 2px;
+}
+
+.star.filled {
+    color: #fbbf24;
+}
+
+.star.empty {
+    color: #d1d5db;
+}
+
+.star.pending {
+    color: var(--primary);
+    opacity: 0.5;
+}
+
+.star.locked {
+    font-size: 16px;
+    opacity: 0.4;
+}
+
+.stage-best {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+.enter-stage-btn {
+    width: 100%;
+}
+
+/* ── 阶段内页面 ── */
+.stage-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.stage-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.stage-title-area {
+    flex: 1;
+}
+
+.stage-big-icon {
+    font-size: 48px;
+}
+
+.stage-header h1 {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.stage-desc-text {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.stage-progress-header {
+    display: flex;
+    gap: 20px;
+}
+
+.stage-progress-stat {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.stars-display .star {
+    font-size: 28px;
+}
+
+/* ── 阶段（Phase） ── */
+.phase {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+}
+
+.phase-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.phase-num {
+    width: 32px;
+    height: 32px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.phase-header h2 {
+    font-size: 18px;
+    flex: 1;
+}
+
+.phase-status {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* ── 词汇画廊 ── */
+.word-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+.gallery-card {
+    background: var(--bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+.gallery-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.gallery-card video {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    background: #000;
+}
+
+.gallery-word {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 10px 2px;
+}
+
+.gallery-tags {
+    padding: 0 10px 8px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.gallery-card.mastered {
+    border: 2px solid var(--success);
+}
+
+.mastered-tag {
+    background: #f0fdf4 !important;
+    color: var(--success) !important;
+}
+
+.new-tag {
+    background: var(--primary-light) !important;
+    color: var(--primary) !important;
+}
+
+/* ── 练习区 ── */
+.practice-area {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.practice-video {
+    background: #000;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.practice-video video {
+    width: 100%;
+    display: block;
+    max-height: 300px;
+    object-fit: contain;
+    background: #000;
+}
+
+.practice-progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.practice-progress-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 2px;
+    transition: width 0.3s;
+}
+
+.test-bar .practice-progress-fill {
+    background: var(--warning);
+}
+
+.practice-score {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.practice-nav {
+    text-align: center;
+    margin-top: 12px;
+}
+
+/* ── 练习完成 ── */
+.practice-done {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.result-icon {
+    font-size: 64px;
+    margin-bottom: 12px;
+}
+
+.practice-done h3 {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.practice-done p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.xp-gain {
+    color: var(--warning) !important;
+    font-weight: 700;
+    font-size: 18px !important;
+}
+
+.test-stars {
+    margin-bottom: 12px;
+}
+
+.result-star {
+    font-size: 48px;
+    margin: 0 4px;
+}
+
+.result-star.filled {
+    color: #fbbf24;
+}
+
+.result-star.empty {
+    color: #d1d5db;
+}
+
+.test-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ════════════════════════════════════════
+   复习模式
+   ════════════════════════════════════════ */
+
+.review-page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+.review-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.review-header h1 {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.review-header p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.review-modes {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.mode-btn {
+    padding: 10px 20px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mode-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.mode-btn.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.review-stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.review-nav {
+    text-align: center;
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.review-done {
+    text-align: center;
+    padding: 40px;
+}
+
+/* ── Flashcard ── */
+.flashcard-area {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.flashcard-container {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.flashcard {
+    padding: 0;
+}
+
+.flashcard-video {
+    background: #000;
+}
+
+.flashcard-video video {
+    width: 100%;
+    display: block;
+    max-height: 320px;
+    object-fit: contain;
+    background: #000;
+}
+
+.flashcard-word {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 800;
+    padding: 24px 20px 8px;
+    color: var(--text);
+}
+
+.flashcard-info {
+    text-align: center;
+    padding: 0 20px 24px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.flashcard-controls {
+    padding: 16px 20px;
+    background: var(--bg);
+}
+
+.flashcard-progress {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.fc-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.fc-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+}
+
+.fc-pass {
+    background: #f0fdf4;
+    color: var(--success);
+}
+
+.fc-pass:hover {
+    background: #dcfce7;
+}
+
+.fc-fail {
+    background: #fef2f2;
+    color: var(--danger);
+}
+
+.fc-fail:hover {
+    background: #fee2e2;
+}
+
+.fc-shuffle {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.fc-shuffle:hover {
+    background: #ddd6fe;
+}
+
+.flashcard-done {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.flashcard-done h3 {
+    font-size: 24px;
+    margin: 12px 0;
+}
+
+/* ════════════════════════════════════════
+   游戏页面 (原有)
+   ════════════════════════════════════════ */
+
+.game-page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.game-settings {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow);
+}
+
+.game-settings h2 {
+    margin-bottom: 24px;
+    font-size: 20px;
+}
+
+.settings-row {
+    margin-bottom: 16px;
+}
+
+.settings-row label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.settings-row select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    background: #fff;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.game-header .game-timer {
+    color: var(--primary);
+}
+
+.game-video-section {
+    background: #000;
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 16px;
+}
+
+#signVideo {
+    width: 100%;
+    display: block;
+    max-height: 400px;
+    object-fit: contain;
+    background: #000;
+}
+
+.video-hint {
+    text-align: center;
+    padding: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    background: rgba(0,0,0,0.05);
+}
+
+.word-info {
+    text-align: center;
+    padding: 4px 8px 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* ── 选项 ── */
+.options-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.option-btn {
+    padding: 14px 20px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.option-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.option-btn.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.option-btn.correct-answer {
+    border-color: var(--success) !important;
+    background: #f0fdf4 !important;
+    color: var(--success) !important;
+}
+
+.option-btn:disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.feedback {
+    text-align: center;
+    padding: 12px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.feedback.correct {
+    background: #f0fdf4;
+    color: var(--success);
+}
+
+.feedback.wrong {
+    background: #fef2f2;
+    color: var(--danger);
+}
+
+.game-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.game-results {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 48px 32px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.game-results h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+}
+
+.results-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.results-stats div {
+    padding: 16px;
+    background: var(--bg);
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.results-stats div span {
+    display: block;
+    font-size: 24px;
+    color: var(--primary);
+    margin-top: 4px;
+}
+
+.results-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+/* ════════════════════════════════════════
+   词库浏览 (原有)
+   ════════════════════════════════════════ */
+
+.learning-page {
+    display: flex;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 20px;
+    min-height: calc(100vh - 56px);
+}
+
+.learning-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+    position: sticky;
+    top: 80px;
+}
+
+.learning-sidebar h3 {
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.filter-group {
+    margin-bottom: 14px;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-secondary);
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 13px;
+    background: #fff;
+}
+
+.learning-content {
+    flex: 1;
+}
+
+.learning-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.learning-header h2 {
+    font-size: 20px;
+}
+
+.result-count {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.word-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.word-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.word-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.word-card-video {
+    background: #000;
+    aspect-ratio: 4/3;
+}
+
+.word-card-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+}
+
+.word-card-info {
+    padding: 10px 12px;
+}
+
+.word-card-word {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.word-card-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.tag-type {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.tag-cat {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.pagination {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.page-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.page-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.page-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+/* ── 模态框 ── */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    position: relative;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    max-width: 600px;
+    width: 90%;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 24px;
+    color: var(--text);
+    cursor: pointer;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border-radius: 50%;
+}
+
+.modal-content video {
+    width: 100%;
+    display: block;
+    background: #000;
+    max-height: 400px;
+}
+
+.detail-info {
+    padding: 20px;
+}
+
+.detail-info h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.detail-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.detail-tags .tag {
+    font-size: 13px;
+    padding: 4px 12px;
+}
+
+/* ── 表单 ── */
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-secondary);
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+}
+
+.form-error {
+    color: var(--danger);
+    font-size: 13px;
+    padding: 8px;
+    background: #fef2f2;
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+}
+
+/* ── 空状态 ── */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+}
+
+.empty-state p {
+    font-size: 16px;
+}
+
+/* ── 响应式 ── */
+@media (max-width: 768px) {
+    .features { grid-template-columns: 1fr; }
+    .hero { padding: 40px 16px 40px; }
+    .hero-content h1 { font-size: 28px; }
+    .hero-stats { gap: 10px; }
+    .stat-card { min-width: 80px; padding: 12px 16px; }
+    .stat-num { font-size: 22px; }
+    .game-page { padding: 20px 12px; }
+    .options-section { grid-template-columns: 1fr; }
+    .results-stats { grid-template-columns: repeat(2, 1fr); }
+    .learning-page { flex-direction: column; }
+    .learning-sidebar { width: 100%; position: static; }
+    .word-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    .nav-inner { padding: 0 12px; gap: 10px; }
+    .nav-user input { width: 90px; }
+    .stage-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+    .stage-header { flex-direction: column; text-align: center; }
+    .profile-main { flex-direction: column; text-align: center; }
+    .profile-stats { justify-content: center; }
+    .review-modes { justify-content: center; }
+    .fc-buttons { flex-direction: column; }
+    .test-actions { flex-direction: column; align-items: center; }
+    .practice-done { padding: 24px 12px; }
+}
